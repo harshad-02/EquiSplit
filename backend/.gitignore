@@ -1,0 +1,17 @@
+target/
+*.class
+*.log
+logs/
+.env
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+bin/
+hs_err_pid*
+replay_pid*
+!mvnw
+!mvnw.cmd
+!.mvn/wrapper/maven-wrapper.jar

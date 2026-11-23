@@ -1,0 +1,56 @@
+server:
+  port: ${PORT:5000}
+
+spring:
+  application:
+    name: equisplit-backend
+
+  datasource:
+    # DATABASE_URL can be provided as postgresql://user:pass@host:port/dbname
+    # or as jdbc:postgresql://host:port/dbname
+    url: ${SPRING_DATASOURCE_URL:${DATABASE_URL:jdbc:postgresql://localhost:5432/equisplit}}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          time_zone: UTC
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:defaultSecretKeyForDevelopmentOnlyNeedsToBe32BytesLong!}
+    expiration-ms: 3600000 # 1 hour
+  cookie:
+    name: token
+    secure: ${COOKIE_SECURE:false}
+    same-site: ${COOKIE_SAME_SITE:lax}
+  redis:
+    url: ${REDIS_URL:redis://localhost:6379}
+  rate-limit:
+    login:
+      limit: 5
+      window-seconds: 60
+    register:
+      limit: 5
+      window-seconds: 60
+    expense:
+      limit: 30
+      window-seconds: 60
+    settlement:
+      limit: 10
+      window-seconds: 60
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173}
